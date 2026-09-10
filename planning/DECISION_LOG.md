@@ -27,4 +27,17 @@ This document tracks key decisions made during development.
 
 ---
 
+## Phase 3 — Intent Taxonomy & Golden Dataset
+
+| # | Date | Decision | Rationale |
+|---|------|----------|-----------|
+| 12 | — | 12-intent taxonomy across 6 categories | Balances coverage with annotation consistency. More than 15 intents would fragment the data; fewer than 10 would lack routing granularity. |
+| 13 | — | Brand-derived intents (not generic) | Taxonomy intents come from Phase 2 EDA cluster analysis and AmazonHelp conversation patterns, not from generic benchmarks like Banking77. |
+| 14 | — | Single primary intent per message | Avoids multi-label complexity. Secondary signals (urgency, emotion) are captured through escalation labels, not duplicate intents. |
+| 15 | — | Root-cause priority for ambiguous messages | When multiple complaints exist, the intent that resolves the root cause is selected. This aligns with actual support workflows. |
+| 16 | — | Decision tree for annotation | Mermaid flowchart provides deterministic path to reduce inter-annotator disagreement on borderline cases. |
+| 17 | — | Versioned taxonomy with deprecation rules | New intents can be added via MINOR version increments without invalidating previously labeled golden datasets. |
+
+---
+
 *Updated as decisions are made throughout the project.*
