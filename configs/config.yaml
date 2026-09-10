@@ -1,0 +1,112 @@
+# Configuration for Hiver Support AI
+# Phase 2: Data Engineering & Analytics
+
+# Brand Selection
+brand:
+  selected_brand: "AmazonHelp"
+  brand_handle: "@AmazonHelp"
+
+# Data Paths
+paths:
+  raw_data: "data/raw/twitter_support.csv"
+  processed_dir: "data/processed"
+  interim_dir: "data/interim"
+  exports:
+    processed_conversations: "data/processed/processed_conversations.csv"
+    annotation_ready: "data/processed/annotation_ready.csv"
+    preprocessing_summary: "data/processed/preprocessing_summary.json"
+    export_annotation_file: true
+
+# Thread Reconstruction
+threads:
+  minimum_thread_length: 2
+  max_thread_depth: 20
+
+# Text Preprocessing
+preprocessing:
+  lowercase: false
+  remove_urls: true
+  normalize_whitespace: true
+  preserve_emojis: true
+  preserve_punctuation: true
+  remove_rt_prefix: true
+  strip_mentions_from_start: true
+
+# Quality Filters
+quality:
+  min_text_length: 3
+  remove_duplicates: true
+  remove_empty: true
+  remove_system_messages: true
+
+# Logging
+logging:
+  level: "INFO"
+  show_progress_bars: true
+  log_file: "results/pipeline.log"
+
+# ═══════════════════════════════════════════════
+# Phase 2.2: EDA & Brand Intelligence
+# ═══════════════════════════════════════════════
+
+analysis:
+  eda_output_dir: "results/eda"
+  top_n_keywords: 30
+  top_n_phrases: 20
+  n_clusters: 8
+  min_cluster_size: 5
+  sample_messages_per_cluster: 5
+  escalation_keywords:
+    payment:
+      - "refund"
+      - "charge"
+      - "payment"
+      - "money"
+      - "billing"
+      - "charged"
+      - "credit"
+      - "debit"
+      - "transaction"
+      - "price"
+    account:
+      - "account"
+      - "login"
+      - "password"
+      - "locked"
+      - "hacked"
+      - "access"
+      - "verify"
+      - "security"
+      - "unauthorized"
+    damage:
+      - "broken"
+      - "damaged"
+      - "defective"
+      - "wrong item"
+      - "missing"
+      - "not working"
+      - "faulty"
+      - "cracked"
+    urgency:
+      - "urgent"
+      - "asap"
+      - "immediately"
+      - "escalate"
+      - "supervisor"
+      - "manager"
+      - "unacceptable"
+      - "worst"
+      - "terrible"
+      - "lawsuit"
+  visualization:
+    figure_dpi: 150
+    figure_format: "png"
+    color_palette:
+      primary: "#1976D2"
+      secondary: "#FF7043"
+      accent: "#4CAF50"
+      warning: "#FFC107"
+      danger: "#F44336"
+      neutral: "#78909C"
+      background: "#FAFAFA"
+      grid: "#E0E0E0"
