@@ -1,0 +1,63 @@
+{
+  "overall": {
+    "sample_count": 30,
+    "human_overall_mean": 4.73,
+    "judge_overall_mean": 4.92,
+    "overall_mae": 0.2,
+    "overall_mean_difference": 0.1867,
+    "overall_exact_match_pct": 83.33,
+    "overall_within_1_pct": 100.0
+  },
+  "dimensions": {
+    "groundedness": {
+      "human_mean": 4.87,
+      "judge_mean": 4.97,
+      "cohen_kappa_unweighted": -0.0563,
+      "cohen_kappa_quadratic": -0.0563,
+      "exact_match_pct": 83.33,
+      "within_1_pct": 100.0,
+      "mae": 0.1667,
+      "mean_score_difference": 0.1
+    },
+    "correctness": {
+      "human_mean": 4.77,
+      "judge_mean": 5.0,
+      "cohen_kappa_unweighted": 0.0,
+      "cohen_kappa_quadratic": 0.0,
+      "exact_match_pct": 76.67,
+      "within_1_pct": 100.0,
+      "mae": 0.2333,
+      "mean_score_difference": 0.2333
+    },
+    "empathy": {
+      "human_mean": 4.5,
+      "judge_mean": 4.77,
+      "cohen_kappa_unweighted": 0.3056,
+      "cohen_kappa_quadratic": 0.4737,
+      "exact_match_pct": 66.67,
+      "within_1_pct": 100.0,
+      "mae": 0.3333,
+      "mean_score_difference": 0.2667
+    },
+    "actionability": {
+      "human_mean": 4.7,
+      "judge_mean": 4.87,
+      "cohen_kappa_unweighted": 0.5283,
+      "cohen_kappa_quadratic": 0.5283,
+      "exact_match_pct": 83.33,
+      "within_1_pct": 100.0,
+      "mae": 0.1667,
+      "mean_score_difference": 0.1667
+    },
+    "brand_tone": {
+      "human_mean": 4.83,
+      "judge_mean": 5.0,
+      "cohen_kappa_unweighted": 0.0,
+      "cohen_kappa_quadratic": 0.0,
+      "exact_match_pct": 83.33,
+      "within_1_pct": 100.0,
+      "mae": 0.1667,
+      "mean_score_difference": 0.1667
+    }
+  }
+}
