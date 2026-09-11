@@ -99,6 +99,21 @@ class PipelineConfig:
     viz_format: str = "png"
     viz_colors: dict[str, str] = field(default_factory=dict)
 
+    # Phase 4 Agent Config
+    agent_classifier_model_type: str = "tfidf_logistic_regression"
+    agent_golden_dataset_path: Path = Path()
+    agent_embedding_model: str = "all-MiniLM-L6-v2"
+    agent_top_k: int = 3
+    agent_index_source: Path = Path()
+    agent_llm_provider: str = "template"
+    agent_llm_model_name: str = "gpt-4o-mini"
+    agent_api_key_env: str = "OPENAI_API_KEY"
+    agent_max_tokens: int = 250
+    agent_temperature: float = 0.3
+    agent_confidence_threshold: float = 0.65
+    agent_auto_escalate_intents: list[str] = field(default_factory=list)
+    agent_escalation_trigger_keywords: dict[str, list[str]] = field(default_factory=dict)
+
 
 def load_config(config_path: Path | str | None = None) -> PipelineConfig:
     """Load pipeline configuration from a YAML file.
@@ -141,6 +156,12 @@ def load_config(config_path: Path | str | None = None) -> PipelineConfig:
     logging_cfg = raw.get("logging", {})
     analysis_cfg = raw.get("analysis", {})
     viz_cfg = analysis_cfg.get("visualization", {})
+
+    agent_cfg = raw.get("agent", {})
+    clf_cfg = agent_cfg.get("classifier", {})
+    ret_cfg = agent_cfg.get("retrieval", {})
+    gen_cfg = agent_cfg.get("reply_generator", {})
+    esc_cfg = agent_cfg.get("escalation", {})
 
     return PipelineConfig(
         raw=raw,
@@ -195,6 +216,24 @@ def load_config(config_path: Path | str | None = None) -> PipelineConfig:
         viz_dpi=viz_cfg.get("figure_dpi", 150),
         viz_format=viz_cfg.get("figure_format", "png"),
         viz_colors=viz_cfg.get("color_palette", {}),
+        # Phase 4 Agent Config
+        agent_classifier_model_type=clf_cfg.get("model_type", "tfidf_logistic_regression"),
+        agent_golden_dataset_path=PROJECT_ROOT / clf_cfg.get("golden_dataset_path", "data/golden/golden_dataset.csv"),
+        agent_embedding_model=ret_cfg.get("embedding_model", "all-MiniLM-L6-v2"),
+        agent_top_k=ret_cfg.get("top_k", 3),
+        agent_index_source=PROJECT_ROOT / ret_cfg.get("index_source", "data/processed/annotation_ready.csv"),
+        agent_llm_provider=gen_cfg.get("llm_provider", "template"),
+        agent_llm_model_name=gen_cfg.get("model_name", "gpt-4o-mini"),
+        agent_api_key_env=gen_cfg.get("api_key_env", "OPENAI_API_KEY"),
+        agent_max_tokens=gen_cfg.get("max_tokens", 250),
+        agent_temperature=gen_cfg.get("temperature", 0.3),
+        agent_confidence_threshold=esc_cfg.get("confidence_threshold", 0.65),
+        agent_auto_escalate_intents=esc_cfg.get("auto_escalate_intents", ["account_access", "billing_issue"]),
+        agent_escalation_trigger_keywords={
+            cat: kws
+            for cat, kws in esc_cfg.get("trigger_keywords", {}).items()
+            if isinstance(kws, list)
+        },
     )
 
 
