@@ -4,6 +4,7 @@ data/raw/*.zip
 
 # Results - log files
 results/*.log
+logs/*.log
 
 # Python
 __pycache__/
