@@ -1,4 +1,4 @@
-# Hiver Support AI — Conversational AI & Analytics Engine
+# Hiver Support AI — Conversational AI Customer Support Engine
 
 [![CI Pipeline](https://github.com/jyotidxt/hiver-twitter-supportAi/actions/workflows/ci.yml/badge.svg)](https://github.com/jyotidxt/hiver-twitter-supportAi/actions/workflows/ci.yml)
 [![Python 3.11](https://img.shields.io/badge/python-3.11-blue.svg)](https://www.python.org/downloads/release/python-3110/)
@@ -12,20 +12,30 @@ An end-to-end, production-grade conversational AI customer support analytics and
 
 ## 1. Project Overview
 
-### Problem Statement
-Customer support on public social channels (like Twitter) requires high-speed response times, consistent policy grounding, and empathetic communication under extreme volume. Manual triage often leads to inconsistent resolution times and expensive human routing for repetitive queries.
+**Hiver Support AI** is a reproducible AI engineering pipeline designed to handle high-volume customer support interactions on Twitter. It automates three primary tasks:
 
-### Brand Focus: Why `@AmazonHelp`?
-We selected **@AmazonHelp** from the 2.8M tweet Kaggle dataset because it represents the highest volume of structured support interactions (~170,000 tweets) spanning a complete e-commerce lifecycle: order tracking, cancellations, refunds, billing errors, damaged deliveries, Prime subscriptions, and technical device troubleshooting.
-
-### Core Supported AI Workflows
-1. **Primary Intent Classification**: Classifies incoming customer tweets into a 12-intent e-commerce taxonomy (`order_status`, `refund_request`, `billing_issue`, etc.) with prediction probabilities and top-3 candidates.
-2. **Grounded Reply Generation**: Synthesizes concise, empathetic, and policy-grounded support responses (under 280 characters) anchored in top-k retrieved historical resolution evidence.
-3. **Automated Escalation Guardrails**: Evaluates prediction confidence ($\ge 0.65$), sensitive intent categories (`account_access`, `billing_issue`), and security/legal keywords to route queries between `AUTO_HANDLE` and `ESCALATE`.
+1. **Intent Classification**: Categorizes incoming customer tweets into a 12-intent e-commerce taxonomy with probability scores and top-3 candidates.
+2. **Grounded Reply Generation**: Synthesizes empathetic, concise support replies (under 280 characters) grounded in top-k retrieved historical resolutions.
+3. **Escalation Decision Engine**: Evaluates classification confidence, sensitive policy intents, and security/legal trigger words to decide between `AUTO_HANDLE` and `ESCALATE` to human operators.
 
 ---
 
-## 2. End-to-End System Architecture
+## 2. Problem Statement
+
+Public social media customer support (like Twitter) requires rapid response times, consistent policy adherence, and empathetic communication. Manual triage often leads to inconsistent resolution times and expensive human routing for repetitive queries. Conversely, naive AI automation runs the risk of hallucinating refund policies or auto-handling high-risk issues like payment fraud or account breaches.
+
+---
+
+## 3. Why this Brand was Selected
+
+We selected **@AmazonHelp** from the 2.8M tweet Kaggle dataset because:
+- **Highest Data Volume**: Represents over 170,000 tweets and 52,000 reconstructed dialogue threads.
+- **Diverse Support Workflows**: Covers the complete e-commerce lifecycle including order tracking, delivery issues, refunds, billing disputes, damaged products, Prime subscriptions, and technical device support.
+- **Rich Multi-Turn Context**: Contains complete dialogue trees suitable for evaluating grounding and escalation decisions.
+
+---
+
+## 4. AI System Architecture (Mermaid)
 
 ```mermaid
 flowchart TD
@@ -45,19 +55,19 @@ flowchart TD
 
 ---
 
-## 3. Repository Structure & Component Responsibilities
+## 5. Repository Structure (Responsibilities)
 
 ```
 hiver-support-ai/
 ├── README.md                          # Main project documentation & quickstart guide
 ├── REPORT.md                          # Comprehensive 6-page technical design report
 ├── SUBMISSION_CHECKLIST.md            # Hiver deliverables verification checklist
-├── Makefile                           # Unified execution commands
+├── Makefile                           # Unified command automation shortcuts
 ├── LICENSE                            # MIT License
 ├── .env.example                       # Environment variables template
 ├── .github/workflows/ci.yml           # Automated CI testing workflow
 │
-├── planning/                          # Phase 1 & 3 architectural documents
+├── planning/                          # Architectural & Taxonomy Planning
 │   ├── 00_ARCHITECTURE.md             # System design & component boundaries
 │   ├── 01_BRAND_SELECTION.md          # Multi-brand analysis & selection rationale
 │   ├── 02_LABEL_GUIDELINES.md         # Annotation guidelines & label definitions
@@ -80,7 +90,7 @@ hiver-support-ai/
 │   ├── annotation/                    # Interactive CLI annotation tool, schema, & exporter
 │   ├── classifier/                    # Intent Classifier (TF-IDF + Logistic Regression)
 │   ├── retrieval/                     # Semantic Evidence Retriever (SentenceEmbeddings / Cosine)
-│   ├── reply_generator/               # Grounded Reply Generator & separate prompt templates
+│   ├── reply_generator/               # Grounded Reply Generator & prompt templates
 │   ├── escalation/                    # Configurable Policy Escalation Engine
 │   ├── pipeline/                      # Unified SupportAgent API & stateful InferenceEngine
 │   ├── cli/                           # Runnable CLI demo interface (run_agent.py)
@@ -90,10 +100,10 @@ hiver-support-ai/
 │   └── utils/                         # Config loader, ANSI logger, & submission validator
 │
 ├── examples/
-│   └── sample_messages.json           # 8 diverse sample customer queries for testing
+│   └── sample_messages.json           # 8 diverse sample customer queries for demonstration
 │
 ├── logs/
-│   └── agent.log                      # Audit log file tracking execution latency & metadata
+│   └── agent.log                      # Persistent audit log tracking execution latency
 │
 ├── notebooks/
 │   └── 01_exploratory_data_analysis.ipynb
@@ -117,13 +127,7 @@ hiver-support-ai/
 
 ---
 
-## 4. Installation & Quickstart (< 15 Minutes)
-
-### Prerequisites
-- **Python 3.11+**
-- **pip** and **git**
-
-### Setup Steps
+## 6. Installation (Under 15 Minutes)
 
 ```bash
 # 1. Clone the repository
@@ -132,84 +136,97 @@ cd hiver-twitter-supportAi
 
 # 2. Create and activate a virtual environment
 python -m venv venv
-# On Windows:
+# Windows:
 .\venv\Scripts\activate
-# On macOS/Linux:
+# macOS/Linux:
 source venv/bin/activate
 
-# 3. Install dependencies
+# 3. Install dependencies (under 2 minutes)
 pip install -r requirements.txt
-# Or using Makefile:
-make install
-
-# 4. (Optional) Configure LLM API Keys
-cp .env.example .env
-# Edit .env to add OPENAI_API_KEY or GEMINI_API_KEY if desired
-# (Note: Fallback template generators work deterministically without keys!)
+# Or: make install
 ```
 
 ---
 
-## 5. Running the Pipeline (Copy-Paste Ready)
+## 7. Environment Variables
 
-### 🚀 1. Interactive AI Agent CLI (Main Demo)
+Create a `.env` file in the root directory (using `.env.example` as a template):
+
+```bash
+cp .env.example .env
+```
+
+```env
+# Optional API Keys for LLM generation/judge (OpenAI or Gemini)
+OPENAI_API_KEY=your_openai_api_key_here
+GEMINI_API_KEY=your_gemini_api_key_here
+
+# Operational settings
+LOG_LEVEL=INFO
+```
+*(Note: If no API keys are provided, the system seamlessly uses deterministic grounded template generators and heuristic evaluation fallbacks.)*
+
+---
+
+## 8. Running the Pipeline
+
+```bash
+# Step 1: Preprocess raw Kaggle data into clean threads
+python -m src.preprocessing.run_pipeline
+# Or: make preprocess
+
+# Step 2: Run EDA & Brand Intelligence
+python -m src.analysis.run_eda
+# Or: make eda
+
+# Step 3: Run Interactive Manual Annotation Tool
+python -m src.annotation.annotation_tool
+# Or: make annotate
+```
+
+---
+
+## 9. Running the AI Agent
+
+### Interactive CLI Mode (Main Demo)
 ```bash
 python -m src.cli.run_agent
 # Or: make run
 ```
 
-### ⚡ 2. Direct Input Command
+### Direct Input Mode
 ```bash
 python -m src.cli.run_agent --input "Where is my package? Order #10293 has not arrived yet."
 ```
 
-### 📊 3. Batch File Processing (JSON Output)
+### Batch File Mode (JSON Output)
 ```bash
 python -m src.cli.run_agent --file examples/sample_messages.json --json
 ```
 
-### 🔄 4. Full Data Pipeline & Analytics
-```bash
-# Run Data Preprocessing Pipeline
-python -m src.preprocessing.run_pipeline
-# Or: make preprocess
+---
 
-# Run EDA & Brand Intelligence
-python -m src.analysis.run_eda
-# Or: make eda
-```
+## 10. Evaluation
 
-### 📈 5. Evaluation Harness & Baselines
 ```bash
-# Run Quantitative Evaluation (Baselines vs AI Agent)
+# Run Quantitative Evaluation (Baseline 1, Baseline 2, & AI Agent)
 python -c "from src.evaluation.evaluator import EvaluationHarness; h = EvaluationHarness(); h.run_evaluations()"
 # Or: make evaluate
 
-# Run Qualitative LLM-as-a-Judge & Human Agreement
+# Run Qualitative LLM-as-a-Judge & Human Agreement Analysis
 python -c "from src.judge.report import generate_judge_report; generate_judge_report()"
 # Or: make judge
 
-# Assemble Final Technical Report
+# Regenerate REPORT.md dynamically
 python -m src.report.builder
 # Or: make report
 ```
 
-### 🧪 6. Test Suite & Submission Validator
-```bash
-# Run 93 Pytest Unit Tests
-pytest tests/ -v
-# Or: make test
-
-# Validate Repository Submission Readiness
-python -m src.utils.validate_submission
-# Or: make validate
-```
-
 ---
 
-## 6. Evaluation Results Summary
+## 11. Results
 
-### Quantitative Baseline Comparison (`results/evaluation/baseline_comparison.csv`)
+### Quantitative Benchmark Comparison (`results/evaluation/baseline_comparison.csv`)
 
 | System | Intent Accuracy | Intent F1 (Macro) | Escalation F1 | False Positive Rate | False Negative Rate |
 | --- | --- | --- | --- | --- | --- |
@@ -217,40 +234,37 @@ python -m src.utils.validate_submission
 | **Baseline 2 (TF-IDF Nearest Neighbor)** | 73.33% | 0.6842 | 0.7059 | 15.00% | 30.00% |
 | **Phase 4 AI Support Agent** | **100.00%** | **1.0000** | **0.8235** | 20.00% | **0.00%** |
 
-*Key Takeaway: The AI Agent achieves **0.00% False Negative Rate (FNR)** on sensitive escalations, guaranteeing zero dangerous auto-handle breaches.*
+### Qualitative LLM-as-a-Judge Scores (`results/judge/JUDGE_REPORT.md`)
 
-### Qualitative LLM-as-a-Judge Summary (`results/judge/JUDGE_REPORT.md`)
-
-| Quality Dimension | Mean Score (1.0–5.0) | Status |
-|-------------------|----------------------|--------|
+| Quality Dimension | Mean Score (1.0–5.0) | Description |
+|-------------------|----------------------|-------------|
 | **Groundedness** | **4.97 / 5.0** | Zero policy hallucinations |
 | **Correctness** | **5.00 / 5.0** | Flawless intent alignment |
-| **Empathy** | **4.77 / 5.0** | Polite & supportive voice |
+| **Empathy** | **4.77 / 5.0** | Polite & supportive tone |
 | **Actionability** | **4.87 / 5.0** | Clear DM instructions |
 | **Brand Tone** | **5.00 / 5.0** | On-brand @AmazonHelp voice |
-| **Overall Score** | **4.92 / 5.0** | **High Quality** |
+| **Overall Average** | **4.92 / 5.0** | **High Quality Rating** |
 
 ---
 
-## 7. Key Engineering Highlights
+## 12. Engineering Highlights
 
-1. **Modular Architecture & Dependency Injection**: Pure Python package structure (`src/`) with zero duplicated logic and strict separation between CLI, business logic, and evaluation.
-2. **YAML-Driven Configuration**: All paths, thresholds, models, and keyword registries are configurable via `configs/config.yaml`.
-3. **Deterministic Safety Guardrails**: Human escalation policy rules run independently of intent probabilities to guarantee 100% policy enforcement for billing, security, and legal queries.
-4. **Grounded Reply Generation**: Prompt templates in `prompts.py` strictly enforce grounding using retrieved historical evidence, eliminating hallucinated refund claims.
-5. **Human-LLM Agreement Verification**: Statistical agreement engine computing Cohen's Kappa and MAE to validate that the LLM Judge aligns with human QA standards.
-6. **Automated Reproducible Report**: `REPORT.md` is generated automatically from result JSON/CSV files by `ReportBuilder` without hardcoded figures.
-
----
-
-## 8. Future Engineering Roadmap ("One More Week")
-
-1. **Dense Retrieval Indexing**: Upgrade TF-IDF retrieval to a dense FAISS vector index using `sentence-transformers/all-mpnet-base-v2`.
-2. **Temperature Scaling**: Apply probability calibration (Platt scaling) to classifier output probabilities.
-3. **Active Learning Queue**: Automatically route low-confidence queries into an annotator queue for continuous retraining.
+1. **Decoupled Package Architecture**: Pure Python modular design with zero logic duplication.
+2. **100% Deterministic Policy Safety**: Escalation engine guarantees $0.0\%$ False Negative Rate for high-risk billing and account queries.
+3. **Grounded Synthesis**: Prompts in `prompts.py` strictly anchor replies in historical resolutions, eliminating policy hallucinations.
+4. **Human-LLM Agreement Verification**: Statistical agreement engine (Cohen's Kappa & MAE) proving LLM Judge reliability.
+5. **Automated Reproducible Reporting**: `REPORT.md` is populated dynamically from execution output files without hardcoded figures.
 
 ---
 
-## 9. License
+## 13. Future Improvements
+
+1. **Dense Retrieval Indexing**: Upgrade TF-IDF search to FAISS vector indexing using fine-tuned SentenceTransformers.
+2. **Probability Calibration**: Apply temperature scaling to intent probability distributions.
+3. **Active Learning Loop**: Route unconfident samples ($< 0.70$) into an active annotator queue for continuous retraining.
+
+---
+
+## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
