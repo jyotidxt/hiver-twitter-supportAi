@@ -1,0 +1,44 @@
+{
+  "baseline_1_trivial": {
+    "accuracy": 0.5333,
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "false_positive_rate": 0.0,
+    "false_negative_rate": 1.0,
+    "true_negatives": 16,
+    "false_positives": 0,
+    "false_negatives": 14,
+    "true_positives": 0,
+    "total_samples": 30,
+    "business_interpretation": "FPR (0.0%) represents safe queries unnecessarily sent to agents (increased labor cost). FNR (100.0%) represents sensitive queries wrongly automated (risk of customer dissatisfaction or policy breach)."
+  },
+  "baseline_2_simple": {
+    "accuracy": 0.6667,
+    "precision": 0.7,
+    "recall": 0.5,
+    "f1": 0.5833,
+    "false_positive_rate": 0.1875,
+    "false_negative_rate": 0.5,
+    "true_negatives": 13,
+    "false_positives": 3,
+    "false_negatives": 7,
+    "true_positives": 7,
+    "total_samples": 30,
+    "business_interpretation": "FPR (18.8%) represents safe queries unnecessarily sent to agents (increased labor cost). FNR (50.0%) represents sensitive queries wrongly automated (risk of customer dissatisfaction or policy breach)."
+  },
+  "ai_agent_final": {
+    "accuracy": 0.4667,
+    "precision": 0.4667,
+    "recall": 1.0,
+    "f1": 0.6364,
+    "false_positive_rate": 1.0,
+    "false_negative_rate": 0.0,
+    "true_negatives": 0,
+    "false_positives": 16,
+    "false_negatives": 0,
+    "true_positives": 14,
+    "total_samples": 30,
+    "business_interpretation": "FPR (100.0%) represents safe queries unnecessarily sent to agents (increased labor cost). FNR (0.0%) represents sensitive queries wrongly automated (risk of customer dissatisfaction or policy breach)."
+  }
+}

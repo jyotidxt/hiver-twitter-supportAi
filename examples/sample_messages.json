@@ -1,0 +1,42 @@
+[
+  {
+    "id": "sample_01",
+    "category": "order_status",
+    "text": "Where is my order? Order #10293 has not arrived yet."
+  },
+  {
+    "id": "sample_02",
+    "category": "delivery_problem",
+    "text": "Driver left package in wrong apartment building porch!"
+  },
+  {
+    "id": "sample_03",
+    "category": "refund_request",
+    "text": "I want a full refund for my return on order #9921."
+  },
+  {
+    "id": "sample_04",
+    "category": "billing_issue",
+    "text": "I was charged twice on my credit card for single order #4401."
+  },
+  {
+    "id": "sample_05",
+    "category": "account_access",
+    "text": "I cannot log into my account, password reset link expired."
+  },
+  {
+    "id": "sample_06",
+    "category": "product_issue",
+    "text": "Item arrived broken with a severely cracked screen!"
+  },
+  {
+    "id": "sample_07",
+    "category": "technical_support",
+    "text": "Amazon shopping app crashes every time I open my cart."
+  },
+  {
+    "id": "sample_08",
+    "category": "order_modification",
+    "text": "Can I please change the shipping address on my order before it ships?"
+  }
+]

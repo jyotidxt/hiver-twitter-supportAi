@@ -1,0 +1,4 @@
+System,Intent Accuracy,Intent F1 (Macro),Escalation Accuracy,Escalation F1,False Positive Rate,False Negative Rate
+Baseline 1 (Majority Trivial),0.1,0.0152,0.5333,0.0,0.0,1.0
+Baseline 2 (TF-IDF Nearest Neighbor),1.0,1.0,0.6667,0.5833,0.1875,0.5
+Phase 4 AI Support Agent,1.0,1.0,0.4667,0.6364,1.0,0.0
