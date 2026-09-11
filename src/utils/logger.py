@@ -67,10 +67,16 @@ def get_logger(
     logger.setLevel(getattr(logging, level.upper(), logging.INFO))
 
     # Console handler with colors
+    if hasattr(sys.stdout, "reconfigure"):
+        try:
+            sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+        except Exception:
+            pass
+
     console_handler = logging.StreamHandler(sys.stdout)
     console_handler.setLevel(getattr(logging, level.upper(), logging.INFO))
     console_fmt = ColoredFormatter(
-        fmt="%(levelname)s │ %(message)s",
+        fmt="%(levelname)s | %(message)s",
         datefmt="%H:%M:%S",
     )
     console_handler.setFormatter(console_fmt)

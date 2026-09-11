@@ -110,3 +110,38 @@ analysis:
       neutral: "#78909C"
       background: "#FAFAFA"
       grid: "#E0E0E0"
+
+# ═══════════════════════════════════════════════
+# Phase 4: AI Support Agent Engine
+# ═══════════════════════════════════════════════
+
+agent:
+  classifier:
+    model_type: "tfidf_logistic_regression"
+    golden_dataset_path: "data/golden/golden_dataset.csv"
+    ngram_range: [1, 2]
+    max_features: 5000
+    c_val: 1.0
+
+  retrieval:
+    embedding_model: "all-MiniLM-L6-v2"
+    top_k: 3
+    index_source: "data/processed/annotation_ready.csv"
+
+  reply_generator:
+    llm_provider: "template"  # Options: openai, gemini, template
+    model_name: "gpt-4o-mini"
+    api_key_env: "OPENAI_API_KEY"
+    max_tokens: 250
+    temperature: 0.3
+
+  escalation:
+    confidence_threshold: 0.65
+    auto_escalate_intents:
+      - "account_access"
+      - "billing_issue"
+    trigger_keywords:
+      payment_dispute: ["chargeback", "fraud", "unauthorized charge", "lawsuit", "attorney"]
+      account_security: ["hacked", "stolen account", "security breach", "locked out"]
+      damaged_product: ["cracked screen", "shattered", "broken beyond repair"]
+      legal_privacy: ["lawyer", "legal action", "gdpr", "subpoena"]
